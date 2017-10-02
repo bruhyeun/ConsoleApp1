@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 using System.IO;
-using System.Data.SQLite;
 using ConsoleApp1.Controllers;
 
 namespace ConsoleApp1
@@ -21,11 +20,6 @@ namespace ConsoleApp1
 
             if (File.Exists(filePath))
             {
-                //SQLiteConnection.CreateFile("MyDatabase.sqlite");
-                //SQLiteConnection m_dbConnection;
-                //m_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-                //m_dbConnection.Open();
-
                 //string sql = "CREATE TABLE highscores (name VARCHAR(20), score INT)";
                 //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 //command.ExecuteNonQuery();
@@ -44,13 +38,26 @@ namespace ConsoleApp1
                 string[] content = File.ReadAllLines(filePath);
                 string[] header = content[0].Split(',');
 
-                GpsPositionAbsoluteController dataRecord = new GpsPositionAbsoluteController(true, header);
-                dataRecord.TableName = "GpsPositionAbsolute";
+                GpsPositionAbsoluteController dataRecordController = new GpsPositionAbsoluteController(true, header);
+                dataRecordController.TableName = dataRecordController.tableName;
+                bool isConnected = dataRecordController.SetConnection();
 
-                int transaction;
-                for (var i = 1; i < content.Length; i++)
-                    transaction = dataRecord.CreateDataRecord(dataRecord.TableName, content[i].Split(','));
-                
+                if (isConnected)
+                {
+                    dataRecordController.OpenConnection();
+                    dataRecordController.ExecuteQuery(dataRecordController.createGpsAbsoluteTable);
+                    dataRecordController.CloseConnection();
+                }
+                else
+                {
+                    Console.WriteLine("Unable to connect.");
+                }
+
+                //int transaction;
+                //for (var i = 1; i < content.Length; i++)
+                //    transaction = dataRecordController.CreateDataRecord(dataRecordController.TableName, content[i].Split(','));
+
+
                 //GpsPositionAbsolute record = new GpsPositionAbsolute(content[0].Split(','));
                 Console.ReadLine();
 

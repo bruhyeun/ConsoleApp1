@@ -12,7 +12,7 @@ namespace ConsoleApp1.Models
         {
         }
 
-        public DataRecord(string timestamp, string procFlag)
+        public DataRecord(DateTime timestamp, string procFlag)
         {
             this.TimeStamp = timestamp;
             this.ProcFlags = procFlag;
@@ -20,7 +20,7 @@ namespace ConsoleApp1.Models
         }
 
         // Properties
-        public string TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
         public string ProcFlags { get; set; }
     }
 }
