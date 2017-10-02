@@ -45,6 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DataRecordController.cs" />
+    <Compile Include="Controllers\GpsPositionAbsoluteController.cs" />
+    <Compile Include="Models\DataRecord.cs" />
+    <Compile Include="Models\GpsPositionAbsolute.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
