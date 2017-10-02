@@ -15,9 +15,15 @@ namespace ConsoleApp1.Controllers
             GpsPositionAbsolute dataRecord = new GpsPositionAbsolute(parameters);
         }
 
+        public GpsPositionAbsoluteController(bool headerFlag, params string[] parameters)
+        {
+            GpsPositionAbsolute dataRecord = new GpsPositionAbsolute(headerFlag, parameters);
+            dataRecord.IsValidHeader(parameters);
+        }
 
         // Properties
-        private string table = "GpsPositionAbsolute";
-        private string columns = "INSERT INTO GpsPositionAbsolute (Time,Available,PositionType,PositionMode,Latitude,Longitude,Elevation,Nsats,NRefStations,ContinuousLock,GDOP,PDOP,HDOP,VDOP,NDOP,EDOP,RMSE,NorthVelocity,EastVelocity,VertVelocity,GpsHeading,CorrectionAge,UnitVariance,FTest,FNormalised,SDLatitude,SDLongitude,SDHeight,ExternalReliability,SDUW,DQI,LineName,ProcFlags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        //private string table = "GpsPositionAbsolute";
+        //private string columns = "INSERT INTO GpsPositionAbsolute (Time,Available,PositionType,PositionMode,Latitude,Longitude,Elevation,Nsats,NRefStations,ContinuousLock,GDOP,PDOP,HDOP,VDOP,NDOP,EDOP,RMSE,NorthVelocity,EastVelocity,VertVelocity,GpsHeading,CorrectionAge,UnitVariance,FTest,FNormalised,SDLatitude,SDLongitude,SDHeight,ExternalReliability,SDUW,DQI,LineName,ProcFlags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     }
 }

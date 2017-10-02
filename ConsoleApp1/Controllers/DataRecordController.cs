@@ -13,28 +13,36 @@ namespace ConsoleApp1.Controllers
         }
 
         // Methods
-        public int CreateDataRecord(params string[] dataRecord)
+        public int CreateDataRecord(string table, params string[] parameters)
         {
-            Console.WriteLine("Created: " + dataRecord.ToList().ToString());
+            string headerList = "";
+            foreach (var record in parameters)
+                headerList = headerList + record + '\n';
+
+            Console.WriteLine("Created in "+ this.TableName + ":\n" + headerList);
             return 0;
         }
 
-        public int ReadDataRecord(params string[] dataRecord)
+        public int ReadDataRecord(string table, params string[] parameters)
         {
-            Console.WriteLine("Read: " + dataRecord.ToString());
+            Console.WriteLine("Read: " + parameters.ToString());
             return 0;
         }
 
-        public int UpdateDataRecord(params string[] dataRecord)
+        public int UpdateDataRecord(string table, params string[] parameters)
         {
-            Console.WriteLine("Updated: " + dataRecord.ToString());
+            Console.WriteLine("Updated: " + parameters.ToString());
             return 0;
         }
 
-        public int DeleteDataRecord(params string[] dataRecord)
+        public int DeleteDataRecord(string table, params string[] parameters)
         {
-            Console.WriteLine("Deleted: " + dataRecord.ToString());
+            Console.WriteLine("Deleted: " + parameters.ToString());
             return 0;
         }
+
+        // Properties
+        public string TableName { get; set; }
+        //public bool TableExistence { get; set; }
     }
 }

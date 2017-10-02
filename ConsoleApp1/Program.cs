@@ -17,6 +17,8 @@ namespace ConsoleApp1
             Console.WriteLine("Enter File Path: ");
             filePath = Console.ReadLine();
 
+            filePath = "C:\\Users\\EclaveaB\\source\\repos\\ConsoleApp3\\ConsoleApp3\\test\\export\\ascii\\201706270903\\FugroSynergy-Survey_2-Starfix.XP2-10202Raw-GpsPositionAbsolute.csv";
+
             if (File.Exists(filePath))
             {
                 //SQLiteConnection.CreateFile("MyDatabase.sqlite");
@@ -42,10 +44,13 @@ namespace ConsoleApp1
                 string[] content = File.ReadAllLines(filePath);
                 string[] header = content[0].Split(',');
 
-                GpsPositionAbsoluteController dataRecord = new GpsPositionAbsoluteController();
-                int transaction = dataRecord.CreateDataRecord(content[0].Split(','));
+                GpsPositionAbsoluteController dataRecord = new GpsPositionAbsoluteController(true, header);
+                dataRecord.TableName = "GpsPositionAbsolute";
 
-
+                int transaction;
+                for (var i = 1; i < content.Length; i++)
+                    transaction = dataRecord.CreateDataRecord(dataRecord.TableName, content[i].Split(','));
+                
                 //GpsPositionAbsolute record = new GpsPositionAbsolute(content[0].Split(','));
                 Console.ReadLine();
 
