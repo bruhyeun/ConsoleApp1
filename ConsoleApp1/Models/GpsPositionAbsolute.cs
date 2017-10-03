@@ -14,7 +14,7 @@ namespace ConsoleApp1.Models
 
         public GpsPositionAbsolute(params string[] parameters)
         {
-            this.data = parameters;
+            data = parameters;
             this.TimeStamp = DateTime.Parse(data[0]);
             this.Available = int.Parse(data[1]);
             this.PositionType = data[2];

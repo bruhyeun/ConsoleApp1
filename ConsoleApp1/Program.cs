@@ -20,45 +20,30 @@ namespace ConsoleApp1
 
             if (File.Exists(filePath))
             {
-                //string sql = "CREATE TABLE highscores (name VARCHAR(20), score INT)";
-                //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-                //command.ExecuteNonQuery();
-                //sql = "insert into highscores (name, score) values ('Me', 3000)";
-                //command = new SQLiteCommand(sql, m_dbConnection);
-                //command.ExecuteNonQuery();
-                //sql = "insert into highscores (name, score) values ('Myself', 6000)";
-                //command = new SQLiteCommand(sql, m_dbConnection);
-                //command.ExecuteNonQuery();
-                //sql = "insert into highscores (name, score) values ('And I', 9001)";
-                //command = new SQLiteCommand(sql, m_dbConnection);
-                //command.ExecuteNonQuery();
-                //m_dbConnection.Close();
-
-
                 string[] content = File.ReadAllLines(filePath);
                 string[] header = content[0].Split(',');
 
                 GpsPositionAbsoluteController dataRecordController = new GpsPositionAbsoluteController(true, header);
-                dataRecordController.TableName = dataRecordController.tableName;
+
                 bool isConnected = dataRecordController.SetConnection();
 
                 if (isConnected)
                 {
                     dataRecordController.OpenConnection();
-                    dataRecordController.ExecuteQuery(dataRecordController.createGpsAbsoluteTable);
+                    dataRecordController.ExecuteQuery(dataRecordController.createGpsPositionAbsoluteTable);
+
+                    Console.WriteLine("Data loading started (" + DateTime.Now + ")");
+                    for (var i = 1; i < content.Length; i++)
+                        dataRecordController.ExecuteQuery(dataRecordController.insertGpsPositionAbsoluteRecord, content[i].Split(','));
+
                     dataRecordController.CloseConnection();
+                    Console.WriteLine("Data loading finished (" + DateTime.Now + ")");
                 }
                 else
                 {
                     Console.WriteLine("Unable to connect.");
                 }
 
-                //int transaction;
-                //for (var i = 1; i < content.Length; i++)
-                //    transaction = dataRecordController.CreateDataRecord(dataRecordController.TableName, content[i].Split(','));
-
-
-                //GpsPositionAbsolute record = new GpsPositionAbsolute(content[0].Split(','));
                 Console.ReadLine();
 
                 Console.WriteLine("Number of Lines: " + content.Length);

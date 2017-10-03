@@ -19,7 +19,7 @@ namespace ConsoleApp1.Controllers
         {
             try
             {
-                this.sqlConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+                sqlConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
                 return true;
             }
             catch
@@ -30,34 +30,48 @@ namespace ConsoleApp1.Controllers
 
         public void OpenConnection()
         {
-            this.sqlConnection.Open();
+            sqlConnection.Open();
         }
 
         public void CloseConnection()
         {
-            this.sqlConnection.Close();
+            sqlConnection.Close();
         }
 
         public void ExecuteQuery(string textQuery)
         {
-            //db = new SQLiteDataAdapter(textQuery, this.sqlConnection);
             sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = textQuery;
-
             try
             {
                 sqlCommand.ExecuteNonQuery();
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.GetHashCode()); // I finished here.
                 Console.WriteLine(ex.Message);
             }
-            
         }
-        //string sql = "CREATE TABLE highscores (name VARCHAR(20), score INT)";
-        //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-        //command.ExecuteNonQuery();
+
+        public void ExecuteQuery(string textQuery, params string[] parameters)
+        {
+            sqlCommand = sqlConnection.CreateCommand();
+            sqlCommand.CommandText = textQuery;
+            columns = this.Columns.Split(',');
+            for (int i = 0; i < columns.Length; i++)
+            {
+                sqlCommand.Parameters.AddWithValue(columns[i].ToString().Trim(), parameters[i]);
+            }
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public bool TableExists(string table)
         {
             return true;
@@ -95,32 +109,8 @@ namespace ConsoleApp1.Controllers
         public string TableName { get; set; }
         public string Columns { get; set; }
 
+        private string[] columns;
         private SQLiteConnection sqlConnection;
         private SQLiteCommand sqlCommand;
-        //private SQLiteDataAdapter db;
-        //private DataSet DS = new DataSet();
-        //private DataTable DT = new DataTable();
-
-
-
-        //private void LoadData()
-        //{
-        //    SetConnection();
-        //    this.sqlConnection.Open();
-        //    sqlCommand = this.sqlConnection.CreateCommand();
-        //    string CommandText = "select id, desc from mains";
-        //    DB = new SQLiteDataAdapter(CommandText, sql_con);
-        //    DS.Reset();
-        //    DB.Fill(DS);
-        //    DT = DS.Tables[0];
-        //    Grid.DataSource = DT;
-        //    this.sqlConnection.Close();
-        //}
-
-        //private void Add()
-        //{
-        //    string textSQLQuery = "insert into  mains (desc) values ('" + txtDesc.Text + "')";
-        //    ExecuteQuery(textSQLQuery);
-        //}
     }
 }

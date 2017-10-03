@@ -13,6 +13,7 @@ namespace ConsoleApp1.Controllers
         public GpsPositionAbsoluteController()
         {
             this.TableName = tableName;
+            this.Columns = columns;
         }
 
         public GpsPositionAbsoluteController(params string[] parameters) : this()
@@ -29,7 +30,40 @@ namespace ConsoleApp1.Controllers
 
         // Properties
         public string tableName = "GpsPositionAbsolute";
-        public string createGpsAbsoluteTable = "CREATE TABLE GpsPositionAbsolute (" +
+        public string columns = "Time," +
+            "Available," +
+            "PositionType," +
+            "PositionMode," +
+            "Latitude," +
+            "Longitude," +
+            "Elevation," +
+            "Nsats," +
+            "NRefStations," +
+            "ContinuousLock," +
+            "GDOP," +
+            "PDOP," +
+            "HDOP," +
+            "VDOP," +
+            "NDOP," +
+            "EDOP," +
+            "RMSE," +
+            "NorthVelocity," +
+            "EastVelocity," +
+            "VertVelocity," +
+            "GpsHeading," +
+            "CorrectionAge," +
+            "UnitVariance," +
+            "FTest," +
+            "FNormalised," +
+            "SDLatitude," +
+            "SDLongitude," +
+            "SDHeight," +
+            "ExternalReliability," +
+            "SDUW," +
+            "DQI," +
+            "LineName," +
+            "ProcFlags";
+        public string createGpsPositionAbsoluteTable = "CREATE TABLE GpsPositionAbsolute (" +
             "Time DATETIME," +
             "Available INT," +
             "PositionType VARCHAR(20)," +
@@ -64,7 +98,7 @@ namespace ConsoleApp1.Controllers
             "LineName VARCHAR(50)," +
             "ProcFlags VARCHAR(10)" +
             ")";
-        public string insertGpsAbsoluteRecord = "INSERT INTO GpsPositionAbsolute (" +
+        public string insertGpsPositionAbsoluteRecord = "INSERT INTO GpsPositionAbsolute (" +
             "Time," +
             "Available," +
             "PositionType," +
